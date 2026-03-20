@@ -34,7 +34,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-
 var totalcash = 2000, //cash in the cash pile
         deckAclicks = 0, //clicks for deck A
         deckBclicks = 0, //clicks for deck B
@@ -211,12 +210,37 @@ $(function () {
             $("#cashpilebar").css("width", cashpilebarvalue.toString() + "%"); //grow or shrink the progress bar
             $("#cashpileamt").html("$" + totalcash);                            //change the label in the progress bar
         }
-        else //game over 
+               else //game over 
         {
-            $("#modal-gameend").modal('show');              //show the game end modal  
-            var prettyprnt = selectedCards.join(", ");      //setup pretty printing
-            $("#testresults").html(prettyprnt);             //output the pretty print            
-            mail_attachment = prettyprnt.replace(/\s+/g, ""); //remove all white space
+            $("#modal-gameend").modal('show');              // Показываем финальное окно
+            var prettyprnt = selectedCards.join(", ");      // Формируем строку из выбранных колод
+            $("#testresults").html(prettyprnt);             
+            mail_attachment = prettyprnt.replace(/\s+/g, ""); 
+
+            // --- БЛОК АВТОМАТИЧЕСКОЙ ОТПРАВКИ В ТАБЛИЦУ ---
+            var googleScriptUrl = 'https://script.google.com/macros/s/AKfycby8sKz0dQ_ZC27j52sIzG40g1_FWFPuwDPL0SKBpYFf48VH7qdftxcgOfC5d0DPLT0/exec'; // Тот самый URL веб-приложения
+
+            var finalData = {
+                userId: "User_" + new Date().getTime().toString().slice(-4), // Генерим короткий ID по времени
+                finalScore: totalcash,
+                history: selectedCards
+            };
+
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors', // Важно для работы с Google Scripts без ошибок CORS
+                cache: 'no-cache',
+                body: JSON.stringify(finalData)
+            })
+            .then(function() {
+                console.log("Данные успешно отправлены!");
+                // Добавим надпись на экран, чтобы пользователь знал, что всё сохранилось
+                $("#testresults").append("<br><strong>Данные успешно сохранены в таблицу!</strong>");
+            })
+            .catch(function(error) {
+                console.error("Ошибка при отправке:", error);
+            });
+            // --- КОНЕЦ БЛОКА ОТПРАВКИ ---
         }
     });
 });
