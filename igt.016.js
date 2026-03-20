@@ -263,9 +263,6 @@ $(function () {
                 });
             });
 
-            $("#viewresultsbtn").click(function () {
-                $("#testresults").toggle().html(selectedCards.join(", "));
-            });
         }
     }); // Закрывает $(".card").click(function () {
 }); // Закрывает $(function () {
