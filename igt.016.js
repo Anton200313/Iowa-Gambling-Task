@@ -135,6 +135,9 @@ $(function () {
     });
 
     $(".card").click(function () {
+		  var currentTime = new Date().getTime();
+        reactionTimes.push(currentTime - lastClickTime); // Считаем разницу в мс
+        lastClickTime = currentTime; // Сбрасываем таймер для следующего клика
         totalclicks++; //increment our click counter.
         //Note in order to end the game the person has to click MAXGAMES + 1 times. This is ok becuase the person is just clicking away.
         if (totalclicks <= MAXGAMES) {
