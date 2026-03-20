@@ -223,7 +223,6 @@ $(function () {
 
                 $(this).prop("disabled", true).text("Отправка...");
 
-                // СЮДА ВСТАВЬ СВОЙ URL
                 var scriptURL = 'https://script.google.com/macros/s/AKfycby8sKz0dQ_ZC27j52sIzG40g1_FWFPuwDPL0SKBpYFf48VH7qdftxcgOfC5d0DPLT0/exec'; 
 
                 var data = {
@@ -251,3 +250,5 @@ $(function () {
                 $("#testresults").toggle().html(selectedCards.join(", "));
             });
         }
+    }); // Закрывает $(".card").click(function () {
+}); // Закрывает $(function () {
