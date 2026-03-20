@@ -224,7 +224,7 @@ $(function () {
 
                 $(this).prop("disabled", true).text("Отправка...");
 
-                var scriptURL = 'https://script.google.com/macros/s/AKfycby8sKz0dQ_ZC27j52sIzG40g1_FWFPuwDPL0SKBpYFf48VH7qdftxcgOfC5d0DPLT0/exec'; 
+                var scriptURL = 'https://script.google.com/macros/s/AKfycbxykL_JZvOsIxfUjmbmfeF-WP24MMnSdTjlgwmt7yaQRxGd2v86jjGIitmMaK7QRbHY/exec'; 
 
                 var data = {
     userId: userName,
