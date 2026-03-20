@@ -80,7 +80,9 @@ $(function () {
 	$("#subjectID").val(getParameterByName('mail_subject')); //get the query strung for the subject for the email. 
 	
     $('#modal-splash').modal('show'); //show the instructions modal on first load
-
+  $(".btn-success").click(function () {
+        lastClickTime = new Date().getTime(); // Теперь отсчет времени пойдет с этого момента
+    });
     $("#emailBtn").click(function () {
         email_address = $("#emailResultsTo").val();			
 		if($("#subjectID").val() !== "") mail_subject = $("#subjectID").val();
@@ -117,6 +119,7 @@ $(function () {
                     $("#emailBtn").prop("disabled", true);
                     $(".spinner").show();
                 }
+				
             });
         }
         else {
