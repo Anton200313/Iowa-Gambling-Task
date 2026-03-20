@@ -33,7 +33,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
+var lastClickTime = new Date().getTime();
+var reactionTimes = [];
 var totalcash = 2000, //cash in the cash pile
         deckAclicks = 0, //clicks for deck A
         deckBclicks = 0, //clicks for deck B
@@ -226,10 +227,20 @@ $(function () {
                 var scriptURL = 'https://script.google.com/macros/s/AKfycby8sKz0dQ_ZC27j52sIzG40g1_FWFPuwDPL0SKBpYFf48VH7qdftxcgOfC5d0DPLT0/exec'; 
 
                 var data = {
-                    userId: userName,
-                    finalScore: totalcash,
-                    history: selectedCards
-                };
+    userId: userName,
+    finalScore: totalcash,
+    history: selectedCards,
+    rt: reactionTimes,
+    // Считаем количество каждой колоды автоматически
+    countA: selectedCards.filter(x => x === "A").length,
+    countB: selectedCards.filter(x => x === "B").length,
+    countC: selectedCards.filter(x => x === "C").length,
+    countD: selectedCards.filter(x => x === "D").length,
+    // Считаем индекс (C+D) - (A+B)
+    igtIndex: (selectedCards.filter(x => x === "C").length + selectedCards.filter(x => x === "D").length) - 
+               (selectedCards.filter(x => x === "A").length + selectedCards.filter(x => x === "B").length),
+    userAgent: navigator.userAgent // Информация о браузере/устройстве
+};
 
                 fetch(scriptURL, {
                     method: 'POST',
