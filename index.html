@@ -141,36 +141,30 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title">Спасибо!</h4>
 				</div>
-				<div class="modal-body">	
-					<div>
-						<p>Ваш тест закончен. </p>
-                        <form>
-						    <label for="subjectID">Введите Ваше имя:</label>
-							<input type="text" id="subjectID" class="form-control" placeholder="Ваше имя">                                  
-					    </form>	
-					</div>									
-				</div>
-                <div class="modal-footer">
-                    <button type="button" id="viewresultsbtn" class="btn btn-info">Показать результаты?</button>                                              
-                    <p id="testresults"></p>
+<div class="modal-body">	
+                    <div>
+                        <p>Ваш тест закончен. </p>
+                        <div class="form-group">
+                            <label for="subjectID">Введите Ваше имя:</label>
+                            <input type="text" id="subjectID" class="form-control" placeholder="Ваше имя">                                  
+                        </div>	
+                    </div>									
                 </div>
-			</div>
-		</div>
-	</div>	
-
+                <div class="modal-footer">
+                    <!-- Добавили кнопку отправки -->
+                    <button type="button" id="sendToGoogleBtn" class="btn btn-primary">Отправить результаты</button>
+                    <button type="button" id="viewresultsbtn" class="btn btn-info">Показать результаты?</button>                                              
+                    <p id="testresults" style="display:none; margin-top:10px;"></p>
+                    <p id="statusMessage" style="margin-top:10px; font-weight:bold;"></p>
+                </div>
+            </div>
+        </div>
+    </div>	
 </main>
- 
-<!-- DEVELOPMENT DEBUGGING -->
-<!-- Jquery 1.9 is the last to support IE8 and lower -->
-<!--[if lt IE 9]>
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script>console.warn("Please update to the lastest browser. Running in depreciated mode");</script>
-<![endif]-->
-<!--[if gte IE 9]><!-->
-    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-<!--<![endif]-->
-<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script type="text/javascript" src="igt.016.min.js"></script>
+
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- ВАЖНО: Замени igt.016.min.js на свой файл, который ты правишь -->
+<script src="js/igt.js"></script> 
 </body>
 </html>
