@@ -210,37 +210,44 @@ $(function () {
             $("#cashpilebar").css("width", cashpilebarvalue.toString() + "%"); //grow or shrink the progress bar
             $("#cashpileamt").html("$" + totalcash);                            //change the label in the progress bar
         }
-               else //game over 
+ else //game over 
         {
-            $("#modal-gameend").modal('show');              // Показываем финальное окно
-            var prettyprnt = selectedCards.join(", ");      // Формируем строку из выбранных колод
-            $("#testresults").html(prettyprnt);             
-            mail_attachment = prettyprnt.replace(/\s+/g, ""); 
+            $("#modal-gameend").modal('show');
+            
+            $("#sendToGoogleBtn").click(function() {
+                var userName = $("#subjectID").val().trim();
+                if (userName === "") {
+                    alert("Пожалуйста, введите имя!");
+                    return;
+                }
 
-            // --- БЛОК АВТОМАТИЧЕСКОЙ ОТПРАВКИ В ТАБЛИЦУ ---
-            var googleScriptUrl = 'https://script.google.com/macros/s/AKfycby8sKz0dQ_ZC27j52sIzG40g1_FWFPuwDPL0SKBpYFf48VH7qdftxcgOfC5d0DPLT0/exec'; // Тот самый URL веб-приложения
+                $(this).prop("disabled", true).text("Отправка...");
 
-            var finalData = {
-                userId: "User_" + new Date().getTime().toString().slice(-4), // Генерим короткий ID по времени
-                finalScore: totalcash,
-                history: selectedCards
-            };
+                // СЮДА ВСТАВЬ СВОЙ URL
+                var scriptURL = 'https://script.google.com/macros/s/AKfycby8sKz0dQ_ZC27j52sIzG40g1_FWFPuwDPL0SKBpYFf48VH7qdftxcgOfC5d0DPLT0/exec'; 
 
-            fetch(googleScriptUrl, {
-                method: 'POST',
-                mode: 'no-cors', // Важно для работы с Google Scripts без ошибок CORS
-                cache: 'no-cache',
-                body: JSON.stringify(finalData)
-            })
-            .then(function() {
-                console.log("Данные успешно отправлены!");
-                // Добавим надпись на экран, чтобы пользователь знал, что всё сохранилось
-                $("#testresults").append("<br><strong>Данные успешно сохранены в таблицу!</strong>");
-            })
-            .catch(function(error) {
-                console.error("Ошибка при отправке:", error);
+                var data = {
+                    userId: userName,
+                    finalScore: totalcash,
+                    history: selectedCards
+                };
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(data)
+                })
+                .then(function() {
+                    $("#statusMessage").text("Готово! Данные в таблице.").css("color", "green");
+                    $("#sendToGoogleBtn").hide();
+                })
+                .catch(function(e) {
+                    alert("Ошибка!");
+                    $("#sendToGoogleBtn").prop("disabled", false).text("Повторить");
+                });
             });
-            // --- КОНЕЦ БЛОКА ОТПРАВКИ ---
+
+            $("#viewresultsbtn").click(function () {
+                $("#testresults").toggle().html(selectedCards.join(", "));
+            });
         }
-    });
-});
